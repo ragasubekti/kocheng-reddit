@@ -1,14 +1,24 @@
+import 'core/locator.dart';
+import 'core/providers.dart';
+import 'core/services/navigator_service.dart';
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:provider/provider.dart';
+import 'views/home/home_view.dart';
 
-void main () => runApp(MainApp());
+void main() async {
+  await LocatorInjector.setupLocator();
+  runApp(MainApplication());
+}
 
-class MainApp extends StatelessWidget {
+class MainApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Login(),
+    return MultiProvider(
+      providers: ProviderInjector.providers,
+      child: MaterialApp(
+        navigatorKey: locator<NavigatorService>().navigatorKey,
+        home: HomeView(),
+      ),
     );
   }
 }
-
